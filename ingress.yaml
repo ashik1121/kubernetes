@@ -1,0 +1,38 @@
+kind: Ingress
+metadata:
+  name: pr-etl-uat-lb
+  namespace: pr-etl-uat
+  annotations:
+    kubernetes.io/ingress.class: alb
+    alb.ingress.kubernetes.io/group.name: prod
+    alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP":80}, {"HTTPS":443}]'
+    alb.ingress.kubernetes.io/ssl-policy: ELBSecurityPolicy-TLS13-1-2-2021-06
+    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:ap-south-1:017820703136:certificate/aa44e76f-7f01-482e-b2af-b06fd31ff494 #certificate-arn
+    alb.ingress.kubernetes.io/ssl-redirect: '443'
+spec:
+  rules:
+
+  - host: pr-pdf-parser-uat.aiocdawacs.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: pr-etl-pdf-parser-uat
+            port:
+              number: 5001
+
+  - host: pr-etl-backend-uat.aiocdawacs.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: pr-etl-backend-uat
+            port:
+              number: 5000
+

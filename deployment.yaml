@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pr-true-sales-backend-uat
+  namespace: pr-etl-uat
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pr-true-sales-backend-uat
+  template:
+    metadata:
+      labels:
+        app: pr-true-sales-backend-uat
+    spec:
+      containers:
+      - name: pr-true-sales-backend-uat
+        image: 017820703136.dkr.ecr.ap-south-1.amazonaws.com/true_sales_backend-uat/true-sales-backend-uat:latest
+        resources:
+          requests:
+            memory: "16Gi"
+            cpu: "4"
+          limits:
+            memory: "18Gi"
+            cpu: "6"
+        ports:
+        - containerPort: 8080
+        envFrom:
+        - configMapRef:
+            name: pr-true-sales-backend-uat-configmap
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: pr-true-sales-backend-uat
+  namespace: pr-etl-uat
+spec:
+  selector:
+    app: pr-true-sales-backend-uat
+  ports:
+  - name: http
+    port: 8080
+    targetPort: 8080

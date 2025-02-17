@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: pr-true-sales-backend-uat-configmap
+data:
+  DATABASE_USER: "etlconfig_uat"
+  DATABASE_PASSWORD: "TFt3MI8LzHR485cY"
+  DATABASE_PORT: "3306"
+  DATABASE_HOST: "etl-config-uat.c3uuuuqsuwo0.ap-south-1.rds.amazonaws.com"
+  DATABASE_NAME: "parser"
+  SESSION_TIMEOUT: "300"
+  BUCKET_DONE: "pharma-rack-stockandsale-files-done-uat"
+  BUCKET_ERROR: "pharma-rack-stockandsale-files-error-uat"
+  BUCKET_MANUAL: "pharma-rack-stockandsale-files-uat"
